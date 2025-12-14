@@ -1,30 +1,71 @@
-.form-wrapper form input {
+.form-wrapper {
+  width: 100vw;           // На всю ширину экрана
+  margin: 0;              // Убираем возможные отступы
+  padding: 1rem;          // Отступы внутри: слева и справа
+  background: #f5f5f5;
+  border-bottom: 1px solid #e0e0e0;
+  box-sizing: border-box;
+  position: relative;
+
+  // Убедимся, что дочерние блоки не обрезаются
+  form {
     width: 100%;
-    height: 50px;
-    color: #fff;
-    font-size: 15px;
-    font-weight: 400;
-    text-indent: 18px;
-    padding: 0 60px 0 0;
-    background: #ffffff33;
-    border-radius: 5px 25px 25px 5px;
-    border: 0;
-    box-shadow: none;
+    display: flex;
+  }
+
+  label {
+    width: 100%;
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  input[type="text"] {
+    flex: 1;
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
     outline: none;
+    box-sizing: border-box;
+
+    &:focus {
+      border-color: #007bff;
+      box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+    }
+  }
+
+  button {
+    padding: 0.75rem 1.25rem;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.2s;
+
+    &:hover:not(:disabled) {
+      background: #0056b3;
+    }
+
+    &:disabled {
+      background: #ccc;
+      color: #666;
+      cursor: not-allowed;
+      opacity: 0.8;
+    }
+  }
 }
 
-.form-wrapper form button {
-    width: 50px;
-    height: 50px;
-    background: transparent url(../../assets/images/plus.png) no-repeat center/cover;
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    z-index: 2;
+// Адаптивность: на мобильных — чуть меньше отступов
+@media (max-width: 480px) {
+  .form-wrapper {
+    padding: 0.75rem;
+  }
 
-    border-radius: 25px;
-    border: 0;
-    box-shadow: none;
-    outline: none;
-    cursor: pointer;
+  .form-wrapper button {
+    padding: 0.65rem 1rem;
+    font-size: 0.95rem;
+  }
 }
