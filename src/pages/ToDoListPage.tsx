@@ -4,36 +4,32 @@ import { Header } from "../components/Header/Header"
 import { ToDoList } from "../components/ToDoList/ToDoList"
 import { ToDo } from "../models/todo-item"
 import { toast, ToastContainer } from "react-toastify"
-/* import "react-toastify/dist/ReactToastify.css" */
 
 export const ToDoListPage = () => {
   const [todos, setTodos] = useState<ToDo[]>([])
 
   const createNewToDo = (text: string) => {
     const newToDo: ToDo = {
-      id: todos.length,
-      text: text,
+      id: Date.now(), // уникальный ID
+      text,
       isDone: false,
     }
-    setTodos([...todos, newToDo])
+    setTodos(prev => [...prev, newToDo]) // используем функциональный подход
     toast.success("Задача добавлена!")
   }
 
   const updateToDo = (toDoItem: ToDo) => {
-    const newTodos = todos.map((todo) => {
-      if (todo.id === toDoItem.id) {
-        todo.isDone = !todo.isDone
-      }
-      return todo
-    })
-    setTodos(newTodos)
-    const status = toDoItem.isDone ? "выполнена" : "отмечена как невыполненная"
+    setTodos(prev =>
+      prev.map(todo =>
+        todo.id === toDoItem.id ? { ...todo, isDone: !todo.isDone } : todo
+      )
+    )
+    const status = toDoItem.isDone ? "возвращена в работу" : "выполнена"
     toast.info(`Задача "${toDoItem.text}" ${status}`)
   }
 
   const deleteToDo = (toDoItem: ToDo) => {
-    const newTodos = todos.filter((todo) => todo.id !== toDoItem.id)
-    setTodos(newTodos)
+    setTodos(prev => prev.filter(todo => todo.id !== toDoItem.id))
     toast.warn("Задача удалена")
   }
 
