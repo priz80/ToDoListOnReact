@@ -1,28 +1,36 @@
-import { useState } from "react"
+import { useState, useRef, FormEvent } from "react"
 import "./Form.scss"
 
-export const Form = (props: { createNewToDo: Function }) => {
+export const Form = (props: { createNewToDo: (text: string) => void }) => {
   const [text, setText] = useState<string>('')
+  const inputRef = useRef<HTMLInputElement>(null)
 
-  const formSubmit = () => {
-    if (text) {
-      props.createNewToDo(text)
+  const formSubmit = (e: FormEvent) => {
+    e.preventDefault()
+    if (text.trim()) {
+      props.createNewToDo(text.trim())
       setText('')
+      inputRef.current?.focus()
     }
   }
 
   return (
     <div className="form-wrapper">
-      <form action="#" onSubmit={formSubmit}>
+      <form onSubmit={formSubmit}>
         <label>
           <input
+            ref={inputRef}
             value={text}
             type="text"
+            placeholder="Добавить задачу..."
             onChange={(e) => setText(e.target.value)}
+            autoFocus
           />
-          <button></button>
+          <button type="submit" disabled={!text.trim()}>
+            Добавить
+          </button>
         </label>
       </form>
     </div>
-  );
-};
+  )
+}
