@@ -9,15 +9,43 @@ const STORAGE_KEY = "todos"
 
 export const ToDoListPage = () => {
   const [todos, setTodos] = useState<ToDo[]>(() => {
-    // Чтение из localStorage при старте
     const saved = localStorage.getItem(STORAGE_KEY)
-    return saved ? JSON.parse(saved) : []
+    try {
+      return saved ? JSON.parse(saved) : []
+    } catch (e) {
+      console.error("Failed to parse todos from localStorage")
+      return []
+    }
   })
 
-  // Сохранение в localStorage при изменении todos
+  // Сохраняем в localStorage при изменении
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(todos))
   }, [todos])
+
+  // Синхронизация между вкладками
+  useEffect(() => {
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === STORAGE_KEY && e.newValue) {
+        try {
+          const updatedTodos: ToDo[] = JSON.parse(e.newValue)
+          // Избегаем зацикливания: не реагируем, если это свои же изменения
+          if (JSON.stringify(updatedTodos) !== JSON.stringify(todos)) {
+            setTodos(updatedTodos)
+            toast.info("Задачи обновлены из другой вкладки", { autoClose: 2000 })
+          }
+        } catch (err) {
+          console.error("Failed to parse storage update")
+        }
+      }
+    }
+
+    window.addEventListener("storage", handleStorageChange)
+
+    return () => {
+      window.removeEventListener("storage", handleStorageChange)
+    }
+  }, [todos]) // Зависимость нужна, чтобы сравнить с текущим состоянием
 
   const createNewToDo = (text: string) => {
     const newToDo: ToDo = {
