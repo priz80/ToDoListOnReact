@@ -73,7 +73,6 @@ export const ToDoListPage = () => {
 
   return (
     <>
-      
       <Form createNewToDo={createNewToDo} />
       <ToDoList todos={todos} updateToDo={updateToDo} deleteToDo={deleteToDo} />
       <ToastContainer position="bottom-right" autoClose={3000} />
