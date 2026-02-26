@@ -29,13 +29,3 @@ export const Layout = () => {
         <Outlet />
   </>
 )};
-
-
-
-// export const Layout = () => {
-//   return (
-//     <>
-//       <app />
-//     </>
-//   );
-// };
