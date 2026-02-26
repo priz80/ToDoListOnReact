@@ -41,7 +41,7 @@ const router = createBrowserRouter([
       }
     ]
   }
-], {basename: '/ToDoListOnReact/'})
+], {basename: '/ToDoListOnReact'})
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement,
