@@ -6,7 +6,7 @@ export const ListItem = ({ todo }: { todo: ToDo }) => {
     <a 
       className={`${classes.link} ${todo.isDone ? classes.done : classes.notDone}`}
       target="_blank"
-      href={`/ToDoListOnReact/list/${todo.id}`}
+      href={`/list/${todo.id}`}
     >
       {todo.text}
     </a>
