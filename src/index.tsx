@@ -36,7 +36,7 @@ const router = createBrowserRouter([
         element: <ItemDescription todos={todos} />
       },
       {
-        path: '*',
+        path: '/*',
         element: <NoteFound />
       }
     ]
