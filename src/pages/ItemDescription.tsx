@@ -23,7 +23,7 @@ export const ItemDescription = () => {
 
   if (!todo) {
     return (
-      <div style={{ padding: "20px" }}>
+      <div className="container">
         <h2>Задача не найдена</h2>
         <button onClick={() => navigate(-1)}>Назад</button>
       </div>
@@ -31,7 +31,7 @@ export const ItemDescription = () => {
   }
 
   return (
-    <div style={{ padding: "20px" }}>
+    <div className="container">
       <h2>Описание задачи</h2>
       <p><strong>Текст:</strong> {todo.text}</p>
       <p><strong>Статус:</strong> {todo.isDone ? "Выполнено" : "В работе"}</p>
