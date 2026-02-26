@@ -23,22 +23,10 @@ const router = createBrowserRouter([
     element: <Layout />,
     errorElement: <NoteFound />,
     children: [
-      {
-        path: '/',
-        element: <HomePage todos={todos} />
-      },
-      {
-        path: '/todo',
-        element: <ToDoListPage />
-      },
-      {
-        path: '/list/:id',
-        element: <ItemDescription todos={todos} />
-      },
-      {
-        path: '/*',
-        element: <NoteFound />
-      }
+      { path: '/', element: <HomePage todos={todos} /> },
+      { path: '/todo', element: <ToDoListPage /> },
+      { path: '/list/:id', element: <ItemDescription /> }, // см. ниже — убираем todos
+      { path: '/*', element: <NoteFound /> }
     ]
   }
 ], {basename: '/ToDoListOnReact'})
