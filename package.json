@@ -27,7 +27,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "predeploy": "npm run build",
+    "predeploy": "npm run build && node scripts/copy-404.js",
     "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
@@ -51,6 +51,7 @@
   "devDependencies": {
     "@types/react-helmet": "^6.1.11",
     "@types/react-helmet-async": "^1.0.1",
+    "copyfiles": "^2.4.1",
     "gh-pages": "^6.3.0",
     "sass": "^1.66.1"
   }
