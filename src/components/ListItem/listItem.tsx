@@ -7,7 +7,7 @@ export const ListItem = ({ todo }: { todo: ToDo }) => {
     <Link 
       className={`${classes.link} ${todo.isDone ? classes.done : classes.notDone}`}
       target="_blank"
-      to={`/ToDoListOnReact/list/${todo.id}`}
+      to={`/list/${todo.id}`}
     >
       {todo.text}
     </Link>
