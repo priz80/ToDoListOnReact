@@ -1,30 +1,41 @@
-import { useEffect, useState } from "react"
-import { ToDo } from "../models/todo-item"
-import { useNavigate, useParams } from "react-router-dom"
+// src/pages/ItemDescription.tsx
+import { useParams, useNavigate } from "react-router-dom";
+import { ToDo } from "../models/todo-item";
+import { useEffect, useState } from "react";
 
-interface ComponentdProps {
-    todos: ToDo[]
-}
+export const ItemDescription = () => {
+  const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
+  const [todo, setTodo] = useState<ToDo | null>(null);
 
-export const ItemDescription = ({ todos}: ComponentdProps) => {
-    const { id } = useParams()
-    const navigate = useNavigate()
-    const [todo, setTodo] = useState<ToDo>()
+  useEffect(() => {
+    const saved = localStorage.getItem("todos");
+    if (saved) {
+      try {
+        const todos: ToDo[] = JSON.parse(saved);
+        const found = todos.find(t => t.id === Number(id));
+        setTodo(found || null);
+      } catch (e) {
+        setTodo(null);
+      }
+    }
+  }, [id]);
 
-
-useEffect(() => {
- const serchTodo = todos.find((todo) => String(todo.id) === id)
-
-
- if (serchTodo) {
-    setTodo(serchTodo)
- }else {
-    navigate('/404')
- }
-}, [todos, id, navigate])
-
+  if (!todo) {
     return (
-        <h1 className="container">{todo?.text}</h1>
-    )
+      <div style={{ padding: "20px" }}>
+        <h2>Задача не найдена</h2>
+        <button onClick={() => navigate(-1)}>Назад</button>
+      </div>
+    );
+  }
 
-}
+  return (
+    <div style={{ padding: "20px" }}>
+      <h2>Описание задачи</h2>
+      <p><strong>Текст:</strong> {todo.text}</p>
+      <p><strong>Статус:</strong> {todo.isDone ? "Выполнено" : "В работе"}</p>
+      <button onClick={() => navigate(-1)}>Назад</button>
+    </div>
+  );
+};
